@@ -59,7 +59,7 @@ class GetJsonInfo:
         contents = self.json_object['contents']
 
         # reverse dict
-        if sys.argv[2] == '-r' and len(sys.argv) == 3: 
+        if '-r' in sys.argv: 
             contents = self.json_object['contents'][::-1]
         
         # sorting as oldest first
@@ -117,22 +117,18 @@ def main():
     # Parsing command line arguments
     if '-A' not in sys.argv and '-l' not in sys.argv:
         print_data.ls_parser()
-    if sys.argv[1] == '-A' and len(sys.argv) == 2:
+    if '-A' in sys.argv:
         print_data.a_parser()
-    if sys.argv[1] == '-l' and len(sys.argv) == 2:
-        print_data.l_r_t_parser()
-    if sys.argv[2] == '-r' and len(sys.argv) == 3:
-        print_data.l_r_t_parser()
-    if sys.argv[3] == '-t' and len(sys.argv) == 4:
-        print_data.l_r_t_parser()
-    filter_option = None
-    for arg in sys.argv:
-        if arg.startswith("--filter="):
-            filter_option = arg.split("=")[1]
+    if '-l' in sys.argv:
+        filter_option = None
+        for arg in sys.argv:
+            if arg.startswith("--filter="):
+                filter_option = arg.split("=")[1]
 
-    if filter_option:
-        x = print_data.filter_parser(filter_option)
-
+        if filter_option:
+            x = print_data.filter_parser(filter_option)
+        else:
+            print_data.l_r_t_parser()
 
 if __name__ == "__main__":
     main()
